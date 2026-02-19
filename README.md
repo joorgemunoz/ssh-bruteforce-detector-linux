@@ -6,17 +6,17 @@ Proyecto desarrollado como Trabajo de Fin de Grado (TFG) orientado a la especial
 
 Este proyecto implementa un detector ligero en Bash capaz de:
 
-Analizar en tiempo real el archivo /var/log/auth.log
+  - Analizar en tiempo real el archivo /var/log/auth.log
 
-Detectar intentos fallidos de autenticación SSH
+  - Detectar intentos fallidos de autenticación SSH
 
-Contabilizar intentos por IP dentro de una ventana temporal
+  - Contabilizar intentos por IP dentro de una ventana temporal
 
-Bloquear automáticamente direcciones IP maliciosas mediante iptables
+  - Bloquear automáticamente direcciones IP maliciosas mediante iptables
 
-Registrar eventos de auditoría
+  - Registrar eventos de auditoría
 
-Permitir listas blancas (whitelist)
+  - Permitir whitelist
 
 El objetivo es simular un entorno real de defensa ante ataques automatizados de fuerza bruta.
 
@@ -24,47 +24,48 @@ El objetivo es simular un entorno real de defensa ante ataques automatizados de 
 
 El proyecto se ha probado en un entorno virtualizado con dos máquinas:
 
-Máquina víctima
+- Máquina víctima
 
-Ubuntu Server
+  - Ubuntu Server
 
-Servicio SSH activo
+  - Servicio SSH activo
 
-Script de detección instalado
+  - Script de detección instalado
 
-Máquina atacante
+- Máquina atacante
 
-Kali Linux / Ubuntu
+  - Kali Linux / Ubuntu
 
 Herramientas utilizadas:
 
-Hydra
+- Hydra
 
-Nmap
+- Nmap
 
-sshpass
+- sshpass
 
 Red interna aislada:
 
 Atacante: 10.194.194.10
 Víctima:  10.194.194.9
+
 ⚙️ Tecnologías utilizadas
 
-Linux (Ubuntu Server)
+- Linux (Ubuntu Server)
 
-Bash scripting
+- Bash scripting
 
-OpenSSH
+- OpenSSH
 
-iptables
+- iptables
 
-Netplan
+- Netplan
 
-VirtualBox
+- VirtualBox
 
-Hydra
+- Hydra
 
-Nmap
+- Nmap
 
 📂 Estructura del proyecto
 linux-ssh-bruteforce-detector/
@@ -74,19 +75,20 @@ linux-ssh-bruteforce-detector/
 ├─ logs/
 │   └─ detector.log
 └─ README.md
+
 🔎 Funcionamiento
 
 El sistema monitoriza:
 
-/var/log/auth.log
+- /var/log/auth.log
 
-Busca eventos:
+- Busca eventos:
 
-Failed password
+- Failed password
 
-Invalid user
+- Invalid user
 
-authentication failure
+- authentication failure
 
 Cuando una IP supera el número de intentos definidos:
 
@@ -96,39 +98,15 @@ WINDOW=60
 Se ejecuta automáticamente:
 
 iptables -I INPUT -s IP -j DROP
+
 🧪 Pruebas realizadas
-Ataque con sshpass
 
-Simulación de múltiples intentos fallidos automatizados.
+- Ataque con sshpass, simulación de múltiples intentos fallidos automatizados.
 
-Resultado:
+- Ataque con Nmap (script ssh-brute)
 
-Detección correcta
-
-Bloqueo automático de IP
-
-Ataque con Hydra
-
-Ataque de diccionario SSH.
-
-Resultado:
-
-Detección en tiempo real
-
-Registro en logs
-
-Aplicación de reglas iptables
-
-Ataque con Nmap (script ssh-brute)
-
-Simulación de fuerza bruta mediante scripts NSE.
-
-Resultado:
-
-Identificación de patrones de ataque
-
-Bloqueo automático
-
+- Ataque con Hydra (Inicios de sesión en masa)
+- 
 📄 Configuración
 
 Archivo:
@@ -144,6 +122,7 @@ WINDOW=60
 BLOCK_TIME=3600
 IPTABLES_CHAIN="INPUT"
 WHITELIST="127.0.0.1"
+
 🚀 Ejecución
 sudo bash /usr/local/bin/detector.sh
 
@@ -161,17 +140,6 @@ Automatización de respuestas
 
 Hardening de servicios SSH
 
-📈 Mejoras futuras
-
-Integración con Fail2Ban
-
-Dashboard de visualización (ELK / Grafana)
-
-Sistema de alertas por correo
-
-Integración con SIEM
-
-Soporte para múltiples servicios (FTP, HTTP, etc.)
 
 👨‍💻 Autor
 
